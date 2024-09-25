@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     // Use the Node.js installation configured in Jenkins
-                    def nodeHome = tool name: 'NodeJS 20', type: 'NodeJSInstallation'
+                    def nodeHome = tool name: 'node', type: 'NodeJSInstallation'
                     env.PATH = "${nodeHome}\\bin;${env.PATH}" // Update PATH for Windows
 
                     // Run your build commands here
