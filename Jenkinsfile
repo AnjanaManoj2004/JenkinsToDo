@@ -4,9 +4,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Create the 'output' directory only if it doesn't exist
-                bat 'if not exist output (mkdir output)'  // Create the 'output' directory
-                bat 'xcopy /E /I * output\\'  // Use xcopy to copy files to the 'output' directory
+                bat 'if not exist output (mkdir output)' // Create the 'output' directory if it doesn't exist
+                bat 'xcopy /E /I /EXCLUDE:output\\* * output\\' // Exclude the output directory while copying
             }
         }
     }        
