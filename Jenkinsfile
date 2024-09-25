@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     // Use the Node.js installation configured in Jenkins
-                    def nodeHome = tool name: 'node', type: 'NodeJSInstallation'
+                    def nodeHome = tool name: 'node.exe', type: 'NodeJSInstallation'
                     env.PATH = "C:\\Program Files\\nodejs\\bin;${env.PATH}"
 
 
