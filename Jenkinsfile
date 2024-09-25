@@ -10,7 +10,9 @@ pipeline {
                     env.PATH = "${nodeHome}\\bin;${env.PATH}"
 
                     // Install dependencies and build the application
-                    bat 'npm install' // Install dependencies using npm                }
+                    bat 'npm install' // Install dependencies using npm
+                    // Add any additional build commands as needed
+                }
             }
         }
     }
