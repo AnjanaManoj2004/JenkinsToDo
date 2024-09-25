@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 bat 'if not exist output (mkdir output)' // Create the 'output' directory if it doesn't exist
-                bat 'xcopy /E /I /EXCLUDE:output\\* * output\\' // Exclude the output directory while copying
+                bat 'robocopy . output /E /XD output' // Use robocopy and exclude the output folder
             }
         }
     }        
