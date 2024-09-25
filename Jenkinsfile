@@ -4,21 +4,14 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Create the 'output' directory if it doesn't exist
-                bat 'if not exist output (mkdir output) || exit /b 1'
-                
-                // Use robocopy and exclude the output folder, preventing retries on failure
-                bat 'robocopy . output /E /XD output /R:0 /W:0 || exit /b 1'
-            }
-        }
-    }        
+                script {
+                    // Specify the Node.js version and tool
+                    def nodeHome = tool name: 'NodeJS 14', type: 'NodeJSInstallation'
+                    env.PATH = "${nodeHome}\\bin;${env.PATH}"
 
-    post {
-        success {
-            echo 'Build was successful!'
-        }
-        failure {
-            echo 'Build failed!'
+                    // Install dependencies and build the application
+                    bat 'npm install' // Install dependencies using npm                }
+            }
         }
     }
 }
