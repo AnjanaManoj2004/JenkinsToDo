@@ -5,13 +5,12 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Specify the Node.js version and tool
-                    def nodeHome = tool name: 'NodeJS 14', type: 'NodeJSInstallation'
-                    env.PATH = "${nodeHome}\\bin;${env.PATH}"
+                    // Change the Node.js version to 20
+                    def nodeHome = tool name: 'NodeJS 20', type: 'NodeJSInstallation'
+                    env.PATH = "${nodeHome}\\bin;${env.PATH}" // Update PATH for Windows
 
-                    // Install dependencies and build the application
-                    bat 'npm install' // Install dependencies using npm
-                    // Add any additional build commands as needed
+                    // Run your build commands here
+                    bat 'npm install' // Example command
                 }
             }
         }
