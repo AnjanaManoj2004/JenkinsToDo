@@ -4,16 +4,11 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // If you want to copy files to a dist folder or perform other build steps
-                script {
-                    // Create a build directory (dist)
-                    bat 'mkdir -p dist'
-                    // Copy all files to the dist directory
-                    bat 'cp -r * dist/' // Copy all files to the dist folder
-                    
-                }
+                bat 'mkdir dist'  // Create the 'dist' directory
+                bat 'xcopy /E /I * dist\\'  // Use xcopy to copy files to the 'dist' directory
+            }
         }
-    }
+    }        
 
     post {
         success {
