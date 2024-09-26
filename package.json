@@ -4,7 +4,9 @@
   "description": "To Do App",
   "main": "app.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node app.js",
+    "build": "webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
