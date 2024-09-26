@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout code from version control (Git, SVN, etc.)
-                git https://github.com/AnjanaManoj2004/JenkinsToDo.git
+                git 'https://github.com/AnjanaManoj2004/JenkinsToDo.git'
             }
         }
 
