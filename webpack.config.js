@@ -4,7 +4,7 @@ const { VueLoaderPlugin } = require('vue-loader');
 
 module.exports = {
   mode: 'development',
-  entry: 'app.js', // Your actual entry file
+  entry: './app.js', // Your actual entry file
 
   output: {
     path: path.resolve(__dirname, 'dist'),
