@@ -1,0 +1,24 @@
+{
+  "name": "jenkinstodo",
+  "version": "1.0.0",
+  "description": "To Do App",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnjanaManoj2004/JenkinsToDo.git"
+  },
+  "keywords": [
+    "node",
+    "jest",
+    "testing"
+  ],
+  "author": "Anjana Manoj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnjanaManoj2004/JenkinsToDo/issues"
+  },
+  "homepage": "https://github.com/AnjanaManoj2004/JenkinsToDo#readme"
+}
