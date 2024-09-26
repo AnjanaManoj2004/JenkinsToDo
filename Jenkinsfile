@@ -4,28 +4,37 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Replace with your actual Git repository URL
+                // Checkout the code from your Git repository
                 git 'https://github.com/AnjanaManoj2004/JenkinsToDo.git'
+            }
+        }
+
+        stage('Install') {
+            steps {
+                script {
+                    // Set up Node.js environment
+                    def nodeHome = tool 'NodeJS' // Make sure this matches the name of your Node.js installation in Jenkins
+                    env.PATH = "C:\Program Files\nodejs" // Update the PATH for Node.js
+                }
+                // Run npm install to install dependencies
+                bat 'npm install'  // Use 'bat' for Windows commands
             }
         }
 
         stage('Build') {
             steps {
-                // Replace this with the actual build command for your project (e.g., Maven, Gradle, etc.)
-                bat 'mvn clean install'
+                // Run your build command
+                bat 'npm run build'  // Adjust this command as necessary
             }
         }
-    } // Close the 'stages' block
+    }
 
     post {
         always {
             echo 'This always runs!'
         }
-        success {
-            echo 'Build was successful!'
-        }
         failure {
             echo 'Build failed.'
         }
-    } // Close the 'post' block
-} // Close the 'pipeline' block
+    }
+}
