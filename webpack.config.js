@@ -3,8 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 
 module.exports = {
-  mode: 'building'
-  entry: 'app.js', // Your actual entry file
+  mode: 'development', // Change 'building' to 'development' or another valid mode
+  entry: './app.js', // Make sure the path is correct, it should be relative
 
   output: {
     path: path.resolve(__dirname, 'dist'),
