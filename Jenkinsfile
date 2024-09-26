@@ -11,7 +11,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Build your application here
-                dir('C:\Users\ANJANA MANOJ\Desktop\JenkinsHD\HDJenkins\JenkinsToDo') { // use the same subfolder for the build step if needed
+                dir('C:\\Users\\ANJANA MANOJ\\Desktop\\JenkinsHD\\HDJenkins\\JenkinsToDo') { // use the same subfolder for the build step if needed
                     bat 'npm run build' // replace with your build command
                 }
             }
