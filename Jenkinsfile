@@ -2,22 +2,43 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Checkout the source code from the specified Git repository
-                git 'https://github.com/AnjanaManoj2004/JenkinsToDo.git'
-            }
-        }
-        
-        stage('Build') {
+        stage('Check Permissions and Replace Files') {
             steps {
                 script {
-                    // Use the Node.js installation configured in Jenkins
-                    def nodeHome = tool name: 'node', type: 'NodeJSInstallation'
-                    env.PATH = "${nodeHome}\\bin;${env.PATH}" // This should be fine for Windows
+                    def workspaceDir = "${env.WORKSPACE}"
+                    def outputDir = "${workspaceDir}\\output"
+                    def testFile = "${outputDir}\\testfile.txt"
 
-                    // Run your build commands here
-                    bat 'npm install' // Example command
+                    // PowerShell script to check read permission
+                    echo "Checking read permission in workspace..."
+                    powershell """
+                        Get-ChildItem -Path '${workspaceDir}'
+                    """
+
+                    // PowerShell script to check write permission and replace file if it exists
+                    echo "Checking write permission and replacing file if it exists in output directory..."
+                    powershell """
+                        # Ensure output directory exists
+                        if (-not (Test-Path '${outputDir}')) {
+                            New-Item -ItemType Directory -Path '${outputDir}' | Out-Null
+                        }
+                        
+                        # Check if testfile.txt exists and replace it
+                        if (Test-Path '${testFile}') {
+                            Write-Host 'File testfile.txt exists. Replacing it...'
+                            Remove-Item -Path '${testFile}' -Force
+                        }
+                        
+                        # Create a new testfile.txt
+                        New-Item -ItemType File -Path '${testFile}' | Out-Null
+
+                        # Verify if the file was successfully created
+                        if (Test-Path '${testFile}') {
+                            Write-Host 'Write test successful: testfile.txt created/replaced in output directory'
+                        } else {
+                            Write-Host 'Failed to write in output directory'
+                        }
+                    """
                 }
             }
         }
