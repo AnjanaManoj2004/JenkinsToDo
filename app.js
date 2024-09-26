@@ -1,16 +1,16 @@
-const app = Vue.createApp({
+// Import Vue from node_modules
+import { createApp, ref, watch } from 'vue';
+
+// Define your Vue app
+const app = createApp({
     data() {
         return {
-            // Task data for the To-Do list
-            task_data: [],
-            new_Task: "",
+            task_data: [],  // Array to store tasks
+            new_Task: "",   // Model for new task input
+            customMessage: "Custom Component Message", // Custom message for the component
         };
     },
     methods: {
-        // Method to remove a task by index
-        removetask_data(index) {
-            this.task_data.splice(index, 1);
-        },
         // Method to add a new task
         add_Task() {
             if (this.new_Task.trim() !== "") {
@@ -18,30 +18,23 @@ const app = Vue.createApp({
                 this.new_Task = "";
             }
         },
-    },
-    components: {
-        'custom-component': {
-            props: ['message'],
-            template: `
-                <div>
-                    <h2>Greetings</h2>
-                    <p>Hello and Welcome</p>
-                    <slot name="customSlot"></slot>
-                </div>
-            `,
-        },
+        // Method to remove a task by index
+        removetask_data(index) {
+            this.task_data.splice(index, 1);
+        }
     },
     computed: {
         // Computed property to count completed tasks
         completedTaskCount() {
             return this.task_data.filter(task => task.completed).length;
-        },
+        }
     },
     setup() {
-        const characterCount = Vue.ref(0);
-        const new_Task = Vue.ref("");
+        const characterCount = ref(0);
+        const new_Task = ref("");
 
-        Vue.watch(new_Task, (newVal) => {
+        // Watch for changes in new_Task and update character count
+        watch(new_Task, (newVal) => {
             characterCount.value = newVal.length;
         });
 
@@ -52,5 +45,16 @@ const app = Vue.createApp({
     },
 });
 
-// Mount the Vue app
+// Register the global custom component
+app.component('custom-component', {
+    props: ['message'],
+    template: `
+        <div>
+            <h2>{{ message }}</h2>
+            <slot name="customSlot"></slot>
+        </div>
+    `
+});
+
+// Mount the app to the DOM
 app.mount("#app");
