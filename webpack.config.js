@@ -38,10 +38,11 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/abc.html',
+      template: './abc.html',
       filename: 'abc.html',
     }),
     new VueLoaderPlugin(),
   ],
 };
+
 
