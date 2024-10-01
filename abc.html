@@ -4,50 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>To_do App</title>
+    <title>To Do App</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="app.js" defer></script>
 </head>
 <body>
     <div id="app">
-        <h1>Todo App</h1>
-        <!-- 11. Router -->
-        <router-link to="/">Home</router-link>
-        <router-link to="/completed">Completed Tasks</router-link>
-        
-        <!-- 11. Router -->
-        <router-view></router-view>
-        <!-- 8. Form Input Bindings -->
-        <div class="to_do">
-            <input v-model="new_Task" @keyup.enter="add_Task" placeholder="Add a Task">
-            <button @click="add_Task">Add</button>
-        </div>
-         <!-- 6. List Rendering -->
+        <h1>Task Manager</h1>
+        <input v-model="new_Task" placeholder="Add a new task" />
+        <button @click="add_Task">Add Task</button>
+
+        <h2>Tasks (Completed: {{ completedTaskCount }})</h2>
         <ul>
-             <!-- 6. List Rendering -->
             <li v-for="(task, index) in task_data" :key="index">
-                <input type="checkbox" v-model="task.completed">
-                <!-- 5. Class and Style Bindings -->
-                <span :class="{ completed: task.completed }">{{ task.text }}</span>
-                <!-- 7. Event Handling: Listening to Event -->
+                <input type="checkbox" v-model="task.completed" />
+                {{ task.text }}
                 <button @click="removetask_data(index)">Remove</button>
             </li>
         </ul>
-
-        <!-- 4. Computed Properties -->
-        <p>Completed Tasks: {{ completedTaskCount }}</p>
-
-        <!-- 10. Components -->
-        <!-- Use props and slots to customize a component -->
-        <custom-component :message="customMessage">
-            <!-- 10c. Slots -->
-            <template #customSlot>
-                <!-- 1. Template Syntax -->
-                <p>Hello And Welcome</p>
-            </template>
-        </custom-component>
+        <p>Character Count: {{ characterCount }}</p>
     </div>
 
-    <!-- 3. Reactivity Fundamentals -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@3.0.11/dist/vue.global.prod.js"></script>
-    <script src="app.js"></script>
+    <script>
+        const { createApp, ref, watch, computed } = Vue;
+
+        const app = createApp({
+            setup() {
+                const task_data = ref([]); // Array to store tasks
+                const new_Task = ref(""); // Model for new task input
+                const characterCount = ref(0);
+
+                // Watch for changes in new_Task and update character count
+                watch(new_Task, (newVal) => {
+                    characterCount.value = newVal.length;
+                });
+
+                // Method to add a new task
+                const add_Task = () => {
+                    if (new_Task.value.trim() !== "") {
+                        task_data.value.push({ text: new_Task.value, completed: false });
+                        new_Task.value = ""; // Clear the input field
+                    }
+                };
+
+                // Method to remove a task by index
+                const removetask_data = (index) => {
+                    task_data.value.splice(index, 1);
+                };
+
+                // Computed property to count completed tasks
+                const completedTaskCount = computed(() => {
+                    return task_data.value.filter(task => task.completed).length;
+                });
+
+                return {
+                    task_data,
+                    new_Task,
+                    characterCount,
+                    add_Task,
+                    removetask_data,
+                    completedTaskCount,
+                };
+            }
+        });
+
+        // Mount the app to the DOM
+        app.mount("#app");
+    </script>
 </body>
 </html>
